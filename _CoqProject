@@ -1,0 +1,18 @@
+-R . expdsl
+
+Semantics/WellFormedness/Spec/WF_experiment.v
+Semantics/WellFormedness/Dec/WF_experiment_dec.v
+Semantics/WellFormedness/WellFormedness.v
+Semantics/Compiler/ExecutionScriptCompiler.v
+Syntax/Experiment.v
+Syntax/ExecutionScript.v
+Syntax/Name.v
+Syntax/Syntax.v
+Tactics/LibTactics.v
+Tactics/Crush.v
+Tactics/Tactics.v
+Tests/Generators/GenUtils.v
+Tests/Generators/GenString.v
+Tests/Generators/GenExperiment.v
+Tests/Properties/WellFormedness/GenWF.v
+Utils/ListUtils.v
