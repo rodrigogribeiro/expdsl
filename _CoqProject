@@ -4,6 +4,8 @@ Semantics/WellFormedness/Spec/WF_experiment.v
 Semantics/WellFormedness/Dec/WF_experiment_dec.v
 Semantics/WellFormedness/WellFormedness.v
 Semantics/Compiler/ExecutionScriptCompiler.v
+Semantics/Execution/ScriptExecution.v
+Syntax/Analysis.v
 Syntax/Experiment.v
 Syntax/ExecutionScript.v
 Syntax/Name.v
