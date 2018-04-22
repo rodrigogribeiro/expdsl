@@ -147,6 +147,6 @@ Lemma flat_map_In {A B : Type} :
     In x xs    ->
     In y (flat_map f xs).
 Proof.
-  inductions xs ; crush.
+  inductions xs ; crush ;
   apply in_app_iff ; right*.
 Qed.

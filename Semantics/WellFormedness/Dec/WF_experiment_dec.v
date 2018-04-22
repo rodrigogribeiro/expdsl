@@ -33,19 +33,50 @@ Definition wf_dependent_variable_dec
     dec_finisher.
 Defined.
 
+
+Definition eq_tr_obj_dec :
+  forall (p p' : (treatment * experimental_object)),
+    {p = p'} + {p <> p'}.
+  pose eq_experimental_object_dec ;
+    pose eq_treatment_dec ;
+    decide equality.
+Defined.
+
+Remark exp_in_prop
+  : forall (os : list experimental_object)
+      (f : list (treatment * experimental_object))
+      (t : treatment)
+      (o : experimental_object),
+    {In o os /\ In (t,o) f} +
+    {~ (In o os /\ In (t,o) f)}.
+Proof.
+  intros os f t o;
+    destruct (in_dec eq_experimental_object_dec o os) ;
+    destruct (in_dec eq_tr_obj_dec (t,o) f) ;
+    dec_finisher.
+Qed.
+
+Lemma exp_design_prop
+  : forall (os : list experimental_object)
+      (f : list (treatment * experimental_object))
+      (t : treatment),
+     {Exists (fun o => In o os /\ In (t , o) f) os} +
+     {~ Exists (fun o => In o os /\ In (t , o) f) os}.
+Proof.
+  intros os f t ; 
+    destruct(Exists_dec _ os (exp_in_prop os f t)) ;
+    dec_finisher.
+Qed.
+
+
 Definition wf_experimental_design_dec
   : forall e, {wf_experimental_design e (exp_design e)} +
          {~ wf_experimental_design e (exp_design e)}.
-  intros e; 
-     assert (Hdec : forall (p : treatment * experimental_object),
-             {In (fst p) (exp_treatments e) /\ In (snd p) (exp_objects e)} +
-             {~ (In (fst p) (exp_treatments e) /\ In (snd p) (exp_objects e))})
-        by 
-          (intros p ;
-            destruct (In_dec eq_treatment_dec (fst p) (exp_treatments e)) ;
-            destruct (In_dec eq_experimental_object_dec (snd p) (exp_objects e)) ;
-            dec_finisher) ;
-     destruct (Forall_dec _ Hdec (des_function (exp_design e))) ; dec_finisher.
+  Hint Resolve exp_design_prop.
+  intros e ; 
+  destruct (Forall_dec _ (exp_design_prop (exp_objects e)
+                                          (des_function (exp_design e)))
+                         (exp_treatments e)) ; dec_finisher.
 Defined.
 
 

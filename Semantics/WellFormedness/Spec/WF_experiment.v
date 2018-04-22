@@ -40,7 +40,7 @@ Inductive wf_experimental_design : experiment -> experimental_design -> Prop :=
     d  = exp_design e     ->
     os = exp_objects e    -> 
     f = des_function d    ->
-    Forall (fun t => In (fst t) ts /\ In (snd t) os) f ->
+    Forall (fun t => Exists (fun o => In o os /\ In (t,o) f) os) ts -> 
     wf_experimental_design e d.
 
 Hint Constructors wf_experimental_design.
